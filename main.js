@@ -1,3 +1,5 @@
+
+// PART ONE
 var FoodItem = function (name, calories, vegan, glutenFree, citrusFree) {
     this.name = name;
     this.calories = calories;
@@ -5,113 +7,119 @@ var FoodItem = function (name, calories, vegan, glutenFree, citrusFree) {
     this.glutenFree = glutenFree;
     this.citrusFree = citrusFree;
 }
+FoodItem.prototype.toString = function () {
+    return 'Name : ' + this.name + 
+            '\nCalories : ' + this.calories + 
+            '\nVegan : ' + this.vegan + 
+            '\nGluten Free : ' + this.glutenFree + 
+            '\nCitrus Free : ' + this.citrusFree;
+}
+// ************************FOOD ITEM VARIABLES USED TO BUILD PLATES ORDERS MENUS*****************************************************************************************************************
+    // Three FoodItems that go into the Burrito Plate
+        var tortilla = new FoodItem('Tortilla', 150, true, false, true);
+        var chicken = new FoodItem('Chicken', 200, false, true, true);
+        var lettuce = new FoodItem('Lettuce', 30, true, false, false);
+    // Three FoodItems that go into the Guac Plate
+        var tacoShell = new FoodItem('Taco Shell', 150, true, false, true);
+        var groundBeef = new FoodItem('Ground Beef', 250, false, true, true);
+        var guacamole = new FoodItem('Guacamole', 150, true, true, true);
+    // Three FoodItems that go into the Margarita
+        var tequila = new FoodItem('Tequila', 100, true, true, true);
+        var margarita_mix = new FoodItem('Margarita Mix', 200, true, true, false);
+        var salt = new FoodItem('Salt', 0, true, true, true);
+
+// ***************************DRINK**************************************************************************************************************
+// PART TWO
 var Drink = function (name, description, price, ingredients) {
     this.name = name;
     this.description = description;
     this.price = price;
     this.ingredients = ingredients;
 }
+Drink.prototype.toString = function () {
+    return 'Name : ' + this.name + 
+            '\nDescription : ' + this.description + 
+            '\nPrice : ' + this.price + 
+            '\nIngredients : ' + this.ingredients;
+}
+//Instance of Margarita 
+var maragrita = new Drink ('Margarita', 'Awesome', 5.00, [tequila, margarita_mix, salt]);
+
+// *****************************PLATE*************************************************************************************************************
 var Plate = function (name, description, price, ingredients) {
     this.name = name;
     this.description = description;
     this.price = price;
     this.ingredients = ingredients;
 }
+Plate.prototype.toString = function () {
+    return 'Name : ' + this.name + 
+            '\nDescription : ' + this.description + 
+            '\nPrice : ' + this.price + 
+            '\nIngredients : ' + this.ingredients;
+}
+    // Plate.prototype.isVegan = function () {
+    //     return this.foodItem.vegan;
+    // }
+    // Plate.prototype.isGlutenFree = function () {
+    //     return and(pluck(this.ingredients, 'glutenFree'));
+    // }
+
+    // Plate.prototype.isCitrusFree = function () {
+    //     console.log("CITRUS? : " + this.foodItem.citrusFree);
+    //     return this.foodItem.citrusFree;
+    // }
+
+// Instance of Burrito Plate
+var burritoPlate = new Plate('Burrito Plate', 'Huge', 6.00, [tortilla, chicken, lettuce]);
+// Instance of Guac Plate
+var guacPlate = new Plate('Guac Plate', 'Delicious', 6.00, [tacoShell, groundBeef, guacamole]);
+
+// *******************************ORDER**********************************************************************************************************
+
 var Order = function (plates) {
-    this.plates = plates;
+    this.order = plates;
 }
+Order.prototype.toString = function () {
+    return 'Plates : ' + this.plates;
+}
+
+// *******************************MENU**********************************************************************************************************
+
 var Menu = function (plates) {
-    this.plates = plates;
+    this.menu = plates;
 }
+Menu.prototype.toString = function () {
+    return 'Menu: ' + this.menu;
+}
+
+var menuMex = ([maragrita, burritoPlate, guacPlate]);
+// *******************************RESTAURANT**********************************************************************************************************
+
 var Restaurant = function (name, description, menu) {
     this.name = name;
     this.description = description;
     this.menu = menu;
 }
+Restaurant.prototype.toString = function () {
+    return 'Name : ' + this.name + 
+            '\nDescription : ' + this.description + 
+            '\nMenu : ' + this.menu;
+}
+
+var RioGrande = new Restaurant('Rio Grande', 'Great Place!', menuMex);
+
+// *******************************CUSTOMER*********************************************************************************************************
 var Customer = function (dietaryPreference) {
     this.dietaryPreference = dietaryPreference;
 }
-
-// PART ONE
-FoodItem.prototype.toString = function () {
-    var output = 'Name : ' + this.name + '\nCalories : ' + this.calories + '\nVegan : ' + this.vegan + '\nGluten Free : ' + this.glutenFree + '\nCitrus Free????? : ' + this.citrusFree;
-    //    console.log(output);
-    return output;
-}
-
-
-// PART TWO
-Drink.prototype.toString = function () {
-    var output = 'Name : ' + this.name + '\nDescription : ' + this.description + '\nPrice : ' + this.price + '\nIngredients : ' + this.ingredients;
-    //    console.log(output);
-    return output;
-}
-Plate.prototype.toString = function () {
-    var output = 'Name : ' + this.name + '\nDescription : ' + this.description + '\nPrice : ' + this.price + '\nIngredients : ' + this.ingredients;
-    //    console.log(output);
-    return output;
-}
-
-Plate.prototype.isVegan = function () {
-    return this.foodItem.vegan;
-}
-
-Plate.prototype.isGlutenFree = function () {
-    return and(pluck(this.ingredients, 'glutenFree'));
-}
-
-Plate.prototype.isCitrusFree = function () {
-    console.log("CITRUS? : " + this.foodItem.citrusFree);
-    return this.foodItem.citrusFree;
-}
-
-Order.prototype.toString = function () {
-    var output = '\nPlates : ' + this.plates;
-    //    console.log(output);
-    return output;
-}
-Menu.prototype.toString = function () {
-    //    var output = '\nMenu : ' + this.plates.map;
-    this.plate.map(
-        function (plate) {
-            return plate.toString();
-        });
-}
-Restaurant.prototype.toString = function () {
-    var output = 'Name : ' + this.name + '\nDescription : ' + this.description + '\nMenu : ' + this.menu;
-    //    console.log(output);
-    return output;
-}
 Customer.prototype.toString = function () {
-    var output = '\nDietary Preference : ' + this.dietaryPreference;
-    //    console.log(output);
-    return output;
+    return 'Dietary Preference : ' + this.dietaryPreference;
 }
+// *****************************************************************************************************************************************
 
-var tortilla = new FoodItem('Tortilla', '150', true, false, true);
-var lettuce = new FoodItem('lettuce', '20', true, true, true);
-var chicken = new FoodItem('Chicken', '800', false, true, true);
-var sriracha = new FoodItem('Sriracha', '900', true, false, true);
-
-var apple = new FoodItem('Apple', '150', true, true, false);
-var ribeye = new FoodItem('Ribeye', '1500', false, true, true);
-
-var bigBurrito = new Plate('Burrito', 'Delicious', '3.50', [tortilla, lettuce, chicken, sriracha]);
-//var guacPlate = new Plate('Guac', 'Delicious', '5.50', ['Avocados', 'Salsa', 'Lime', 'Cilantro']);
-//var margarita = new Plate('Ballin Blue Marg', 'Delicious', '.50', ['Tequila', 'Lime Juice', 'Margarita Mix', 'TripleSec']);
-
-var rioMenu = new Menu(bigBurrito);
-var rioGrande = new Restaurant(rioMenu);
-console.log(rioGrande.toString());
+console.log(RioGrande.toString());
 
 
 
-//var menu1 = new Menu(['A la carte', 'test', 'test'])
-//menu1.toString()
-//
-//orange.toString()
-//console.log('-------------')
-//apple.toString()
-//console.log('-------------')
-//ribeye.toString()
-//console.log('-------------')
+
