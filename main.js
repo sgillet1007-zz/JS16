@@ -7,14 +7,15 @@ var FoodItem = function (name, calories, vegan, glutenFree, citrusFree) {
     this.glutenFree = glutenFree;
     this.citrusFree = citrusFree;
 }
-FoodItem.prototype.toString = function () {
-    return 'Name : ' + this.name + 
+FoodItem.prototype.toStrings = function () {
+    return '\nName : ' + this.name + 
             '\nCalories : ' + this.calories + 
             '\nVegan : ' + this.vegan + 
             '\nGluten Free : ' + this.glutenFree + 
-            '\nCitrus Free : ' + this.citrusFree;
+            '\nCitrus Free : ' + this.citrusFree; +
+            '\n***********************'
 }
-// ************************FOOD ITEM VARIABLES USED TO BUILD PLATES ORDERS MENUS*****************************************************************************************************************
+// ************************FOOD ITEM VARIABLES*****************************************************************************************************************
     // Three FoodItems that go into the Burrito Plate
         var tortilla = new FoodItem('Tortilla', 150, true, false, true);
         var chicken = new FoodItem('Chicken', 200, false, true, true);
@@ -36,14 +37,20 @@ var Drink = function (name, description, price, ingredients) {
     this.price = price;
     this.ingredients = ingredients;
 }
-Drink.prototype.toString = function () {
-    return 'Name : ' + this.name + 
+Drink.prototype.toStrings = function () {
+    var drinkStringArray = [];
+for (var i = 0; i < this.ingredients.length; i++) {
+    drinkStringArray.push(this.ingredients[i].toStrings());
+};
+var drinkString = drinkStringArray.join(' ');
+    return '\nName : ' + this.name + 
             '\nDescription : ' + this.description + 
             '\nPrice : ' + this.price + 
-            '\nIngredients : ' + this.ingredients;
+            '\nIngredients : ' + drinkString + '\n' +
+            '\n***********************'
 }
 //Instance of Margarita 
-var maragrita = new Drink ('Margarita', 'Awesome', 5.00, [tequila, margarita_mix, salt]);
+var margarita = new Drink ('Margarita', 'Awesome', 5.00, [tequila, margarita_mix, salt]);
 
 // *****************************PLATE*************************************************************************************************************
 var Plate = function (name, description, price, ingredients) {
@@ -52,11 +59,18 @@ var Plate = function (name, description, price, ingredients) {
     this.price = price;
     this.ingredients = ingredients;
 }
-Plate.prototype.toString = function () {
-    return 'Name : ' + this.name + 
+Plate.prototype.toStrings = function () {
+var plateStringArray = [];
+for (var i = 0; i < this.ingredients.length; i++) {
+    plateStringArray.push(this.ingredients[i].toStrings());
+};
+var plateString = plateStringArray.join(' ');
+
+    return '\nName : ' + this.name + 
             '\nDescription : ' + this.description + 
             '\nPrice : ' + this.price + 
-            '\nIngredients : ' + this.ingredients;
+            '\nIngredients : ' + plateString + '\n'+
+            '\n***********************';
 }
     // Plate.prototype.isVegan = function () {
     //     return this.foodItem.vegan;
@@ -80,20 +94,42 @@ var guacPlate = new Plate('Guac Plate', 'Delicious', 6.00, [tacoShell, groundBee
 var Order = function (plates) {
     this.order = plates;
 }
-Order.prototype.toString = function () {
-    return 'Plates : ' + this.plates;
+Order.prototype.toStrings = function () {
+    return '\nPlates : ' + this.plates +
+            '\n***********************';
 }
 
 // *******************************MENU**********************************************************************************************************
 
 var Menu = function (plates) {
     this.menu = plates;
+    
 }
-Menu.prototype.toString = function () {
-    return 'Menu: ' + this.menu;
+Menu.prototype.toStrings = function () {
+    // console.log('Menu CL: ' + this.menu)
+    // console.log('This : ' + this)
+     var menuStringArray = [];
+     // console.log(menuStringArray);
+    for (var i = 0; i < this.menu.length; i++) {
+        menuStringArray.push(this.menu[i].toStrings());
+        // console.log(menuStringArray);
+    };
+    var menuString = menuStringArray.join( ' ');
+    // console.log(menuString);
+    return 'MENU' + menuString +
+            '\n***********************';
 }
 
-var menuMex = ([maragrita, burritoPlate, guacPlate]);
+var menuMex = new Menu ([margarita, burritoPlate, guacPlate]);
+
+// this.plate.map(
+//        function (plate) {
+//            return this.plate.toString();
+//        });
+
+// var output = menuMex.toStrings();
+// console.log(output);
+
 // *******************************RESTAURANT**********************************************************************************************************
 
 var Restaurant = function (name, description, menu) {
@@ -101,24 +137,41 @@ var Restaurant = function (name, description, menu) {
     this.description = description;
     this.menu = menu;
 }
-Restaurant.prototype.toString = function () {
-    return 'Name : ' + this.name + 
-            '\nDescription : ' + this.description + 
-            '\nMenu : ' + this.menu;
-}
+Restaurant.prototype.toStrings = function () {
+    var menuStringArray2 = [];
+    console.log(this.menu)
+    for (var i = 0; i < this.menu.length; i++) {
+        menuStringArray2.push(this.menu[i].toStrings());
+    };
+    var menuString = menuStringArray2.join(' ');
+console.log(menuString)
 
+return console.log('Restaurant: ' + this.name +'\nDescription : ' + this.description + '\nMenu : ' + menuString);
+}
+// return   this.name + this.description + this.menu[0];
+
+// console.log(menuMex)
 var RioGrande = new Restaurant('Rio Grande', 'Great Place!', menuMex);
+// console.log(RioGrande)
 
-// *******************************CUSTOMER*********************************************************************************************************
-var Customer = function (dietaryPreference) {
-    this.dietaryPreference = dietaryPreference;
-}
-Customer.prototype.toString = function () {
-    return 'Dietary Preference : ' + this.dietaryPreference;
-}
+var output = RioGrande.toStrings();
+console.log(output);
+// this.plate.map(
+//        function (plate) {
+//            return this.plate.toString();
+//        });
+
+// / *******************************CUSTOMER*********************************************************************************************************
+// var Customer = function (dietaryPreference) {
+//     this.dietaryPreference = dietaryPreference;
+// }
+// Customer.prototype.toStrings = function () {
+//     return '\nDietary Preference : ' + this.dietaryPreference +
+//             '\n***********************';
+// }
 // *****************************************************************************************************************************************
 
-console.log(RioGrande.toString());
+// RioGrande.toStrings()
 
 
 
