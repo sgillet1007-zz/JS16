@@ -13,7 +13,7 @@ FoodItem.prototype.toStrings = function () {
             '\nVegan : ' + this.vegan + 
             '\nGluten Free : ' + this.glutenFree + 
             '\nCitrus Free : ' + this.citrusFree; +
-            '\n***********************'
+            '\n***********************';
 }
 // ************************FOOD ITEM VARIABLES*****************************************************************************************************************
     // Three FoodItems that go into the Burrito Plate
@@ -39,15 +39,15 @@ var Drink = function (name, description, price, ingredients) {
 }
 Drink.prototype.toStrings = function () {
     var drinkStringArray = [];
-for (var i = 0; i < this.ingredients.length; i++) {
-    drinkStringArray.push(this.ingredients[i].toStrings());
-};
-var drinkString = drinkStringArray.join(' ');
+    for (var i = 0; i < this.ingredients.length; i++) {
+        drinkStringArray.push(this.ingredients[i].toStrings());
+    };
+    var drinkString = drinkStringArray.join(' ');
     return '\nName : ' + this.name + 
             '\nDescription : ' + this.description + 
             '\nPrice : ' + this.price + 
             '\nIngredients : ' + drinkString + '\n' +
-            '\n***********************'
+            '\n^^ ********** ^^';
 }
 //Instance of Margarita 
 var margarita = new Drink ('Margarita', 'Awesome', 5.00, [tequila, margarita_mix, salt]);
@@ -60,17 +60,17 @@ var Plate = function (name, description, price, ingredients) {
     this.ingredients = ingredients;
 }
 Plate.prototype.toStrings = function () {
-var plateStringArray = [];
-for (var i = 0; i < this.ingredients.length; i++) {
-    plateStringArray.push(this.ingredients[i].toStrings());
-};
-var plateString = plateStringArray.join(' ');
+    var plateStringArray = [];
+    for (var i = 0; i < this.ingredients.length; i++) {
+        plateStringArray.push(this.ingredients[i].toStrings());
+    };
+    var plateString = plateStringArray.join(' ');
 
     return '\nName : ' + this.name + 
             '\nDescription : ' + this.description + 
             '\nPrice : ' + this.price + 
             '\nIngredients : ' + plateString + '\n'+
-            '\n***********************';
+            '\n^^ ********** ^^';
 }
     // Plate.prototype.isVegan = function () {
     //     return this.foodItem.vegan;
@@ -102,33 +102,20 @@ Order.prototype.toStrings = function () {
 // *******************************MENU**********************************************************************************************************
 
 var Menu = function (plates) {
-    this.menu = plates;
-    
+    this.plates = plates; 
 }
 Menu.prototype.toStrings = function () {
-    // console.log('Menu CL: ' + this.menu)
-    // console.log('This : ' + this)
-     var menuStringArray = [];
-     // console.log(menuStringArray);
-    for (var i = 0; i < this.menu.length; i++) {
-        menuStringArray.push(this.menu[i].toStrings());
-        // console.log(menuStringArray);
+    
+    var menuStringArray = [];
+    for (var i = 0; i < this.plates.length; i++) {
+            menuStringArray.push(this.plates[i].toStrings());
     };
     var menuString = menuStringArray.join( ' ');
-    // console.log(menuString);
-    return 'MENU' + menuString +
-            '\n***********************';
+    return menuString;
 }
 
-var menuMex = new Menu ([margarita, burritoPlate, guacPlate]);
-
-// this.plate.map(
-//        function (plate) {
-//            return this.plate.toString();
-//        });
-
-// var output = menuMex.toStrings();
-// console.log(output);
+// Instanace of Menu class
+var menuMex = new Menu([margarita, burritoPlate, guacPlate]);
 
 // *******************************RESTAURANT**********************************************************************************************************
 
@@ -138,28 +125,17 @@ var Restaurant = function (name, description, menu) {
     this.menu = menu;
 }
 Restaurant.prototype.toStrings = function () {
-    var menuStringArray2 = [];
-    console.log(this.menu)
-    for (var i = 0; i < this.menu.length; i++) {
-        menuStringArray2.push(this.menu[i].toStrings());
-    };
-    var menuString = menuStringArray2.join(' ');
-console.log(menuString)
-
-return console.log('Restaurant: ' + this.name +'\nDescription : ' + this.description + '\nMenu : ' + menuString);
+    return'Restaurant: ' + this.name + 
+        '\nDescription : ' + this.description + 
+        '\n This MENU includes' + this.menu.toStrings() +
+        '\n^ ----------------------- ^';
 }
-// return   this.name + this.description + this.menu[0];
 
-// console.log(menuMex)
-var RioGrande = new Restaurant('Rio Grande', 'Great Place!', menuMex);
-// console.log(RioGrande)
+// Instance of Resturant class
+var RioGrande = new Restaurant('Rio Grande', 'Great Mexican Food!', menuMex);
 
 var output = RioGrande.toStrings();
 console.log(output);
-// this.plate.map(
-//        function (plate) {
-//            return this.plate.toString();
-//        });
 
 // / *******************************CUSTOMER*********************************************************************************************************
 // var Customer = function (dietaryPreference) {
